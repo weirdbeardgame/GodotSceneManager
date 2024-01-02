@@ -1,8 +1,8 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bpep3b0gkyotb"]
+[gd_resource type="Resource" script_class="SceneManagerData" load_steps=2 format=3 uid="uid://dbms56woxb8bc"]
 
-[sub_resource type="CSharpScript" id="CSharpScript_p210d"]
+[ext_resource type="Script" path="res://addons/SceneManager/SceneManagerData.cs" id="1_61yw2"]
 
 [resource]
-script = SubResource("CSharpScript_p210d")
+script = ExtResource("1_61yw2")
 _Levels = {}
 CurrentLevel = "Test1"

@@ -83,11 +83,13 @@ public partial class LevelDockScript : Control
             if (SceneNames != SceneManager.SceneNames && SceneManager.SceneNames.Count > 0)
             {
                 SceneNames = SceneManager.SceneNames;
-
-                LevelSelectorButton SelectorButton = SceneButton.Instantiate<LevelSelectorButton>();
-                SelectorButton.CreateButton(SceneNames.Last());
-                SceneChanger.Add(SelectorButton);
-                Container.AddChild(SelectorButton);
+                foreach (var scene in SceneNames)
+                {
+                    LevelSelectorButton SelectorButton = SceneButton.Instantiate<LevelSelectorButton>();
+                    SelectorButton.CreateButton(scene);
+                    SceneChanger.Add(SelectorButton);
+                    Container.AddChild(SelectorButton);
+                }
             }
         }
     }
