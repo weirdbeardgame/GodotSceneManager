@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bpep3b0gkyotb"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_p210d"]
+
+[resource]
+script = SubResource("CSharpScript_p210d")
+_Levels = {}
+CurrentLevel = "Test1"

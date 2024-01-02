@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7be2p30te46n"]
+
+[ext_resource type="Script" path="res://addons/SceneManager/LevelSelectorButton.cs" id="1_074dl"]
+
+[node name="LevelSelectorButton" type="Button"]
+offset_right = 176.0
+offset_bottom = 65.0
+script = ExtResource("1_074dl")
