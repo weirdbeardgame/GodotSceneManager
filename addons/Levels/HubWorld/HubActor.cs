@@ -1,6 +1,8 @@
 using Godot;
 using System;
 
+// This is intended for 2D level selects that don't nessacarily use the player controller
+// Think a classic 2D or 3D mario overworld level select. These have different controlls and interact based on nodes or spaces
 public partial class HubActor : Node2D
 {
 

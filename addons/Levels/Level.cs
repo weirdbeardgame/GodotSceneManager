@@ -5,12 +5,16 @@ using Godot.Collections;
 [Tool]
 public partial class Level : LevelCommon
 {
+
+    // Take note. SubLevels or scene's can be anything from screens on a 2D tilemap to rooms in a 3D space
+    // They're Sub or attached leves or spaces to the currently loaded main one.
     [Export]
     Dictionary<string, PackedScene> sublevels;
 
     [Export]
     public Array<Exit> exits;
 
+    // Optional Checkpoint.
     protected Checkpoint currentCheckpoint;
 
     SceneManager scenes;
@@ -28,19 +32,6 @@ public partial class Level : LevelCommon
     public override void EnterLevel(Player p)
     {
         base.EnterLevel(p);
-        if (currentCheckpoint != null)
-        {
-            Player.Position = currentCheckpoint.GlobalPosition;
-        }
-        else
-        {
-            currentCheckpoint = (Checkpoint)GetNode("0");
-            if (currentCheckpoint == null)
-            {
-                GD.PushError("No Active Checkpoints in Scene!");
-            }
-            Player.Position = currentCheckpoint.GlobalPosition;
-        }
         AddChild(Player);
         CreateAudioStream();
     }

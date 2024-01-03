@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+// 2D or 3D, Level space that contains a level to enter.
 public partial class LevelSpace : Control
 {
     [Export]
