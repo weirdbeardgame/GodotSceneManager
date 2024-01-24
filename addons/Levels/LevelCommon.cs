@@ -5,7 +5,7 @@ using Godot.Collections;
 public enum LevelType { DEFAULT, GRASS, ISLAND, ICE, WATER }
 
 [Tool]
-public partial class LevelCommon : Node2D
+public partial class LevelCommon : Node
 {
     [Export]
     public string LevelName;
@@ -20,10 +20,6 @@ public partial class LevelCommon : Node2D
 
     bool unlocked;
     bool complete;
-
-    // Use this for non static refs or event calls. IE. Needs to spawn player.
-    // Scenes = GetNode<SceneManager>("/root/SceneManager");
-    protected SceneManager Scenes;
 
     public bool isComplete
     {

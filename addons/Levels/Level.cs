@@ -14,17 +14,10 @@ public partial class Level : LevelCommon
     [Export]
     public Array<Exit> exits;
 
-    // Optional Checkpoint.
-    protected Checkpoint currentCheckpoint;
-
-    SceneManager scenes;
-
     LevelCommon ActiveSubScene;
 
     // Currently active subScene. Otherwise null
     Level subScene;
-
-    Camera2D camera;
 
     Rect2 mapLimits;
     Vector2 mapCellsize;
@@ -45,16 +38,6 @@ public partial class Level : LevelCommon
     {
         ExitLevel();
         EnterLevel(Player);
-    }
-
-    public void Checkpoint(Checkpoint newCheckpoint)
-    {
-        if (currentCheckpoint != null)
-        {
-            currentCheckpoint.Deactivate();
-        }
-        newCheckpoint.isActive = true;
-        currentCheckpoint = newCheckpoint;
     }
 
     // Clear the enemies and other data from the scene.

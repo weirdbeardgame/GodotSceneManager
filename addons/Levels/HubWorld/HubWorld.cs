@@ -19,7 +19,6 @@ public partial class HubWorld : LevelCommon
     {
         Actor = (HubActor)GetNode("Actor");
         GD.Print("HubWorld");
-        Scenes = SceneManager.Manager;
 
         if (Actor == null)
         {
@@ -32,7 +31,7 @@ public partial class HubWorld : LevelCommon
         }
         else
         {
-            Player = Scenes.CreatePlayer();
+            Player = SceneManager.Manager.CreatePlayer();
             Actor.Activate(Player);
         }
 

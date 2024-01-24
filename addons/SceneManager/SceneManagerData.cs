@@ -7,11 +7,12 @@ public partial class SceneManagerData : Resource
 {
     [Export] PackedScene _NewGameScene;
 
-    [Export]
-    Godot.Collections.Dictionary<string, PackedScene> _Levels;
+    [Export] Godot.Collections.Dictionary<string, PackedScene> _Levels;
 
-    [Export]
-    string CurrentLevel = "Test1";
+    [Export] string CurrentLevel = "Test1";
+
+    // The actual Player that will be instaniated
+    [Export] PackedScene PlayerScene;
 
     public SceneManagerData() => _Levels = new Godot.Collections.Dictionary<string, PackedScene>();
     public SceneManagerData(Godot.Collections.Dictionary<string, PackedScene> lev) => _Levels = lev;
@@ -23,8 +24,12 @@ public partial class SceneManagerData : Resource
     // Returns the instantiated packed scene as a Level.
     public LevelCommon Level(string levelName) => _Levels[levelName].Instantiate<LevelCommon>();
 
+    // Returns the active Player refrence
+    public Player CreatePlayer() => PlayerScene.Instantiate<Player>();
 
 #if TOOLS
+    public void SetPlayerRef(string path) => PlayerScene = ResourceLoader.Load<PackedScene>(path);
+
     public bool Add(PackedScene Scene)
     {
         LevelCommon Level = Scene.Instantiate<LevelCommon>();

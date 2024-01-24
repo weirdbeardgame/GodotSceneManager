@@ -12,6 +12,8 @@ public partial class LevelDockScript : Control
     Button AddSceneButton;
     Button NewSceneButton;
 
+    FileSelector PlayerRef;
+
     [Export]
     PackedScene SceneButton;
 
@@ -27,6 +29,9 @@ public partial class LevelDockScript : Control
     {
         Dialog = GetNode<FileDialog>("Panel/FileDialog");
         SceneManager = SceneManager.Manager;
+
+        PlayerRef = GetNode<FileSelector>("PlayerRef");
+        PlayerRef.BrowseButton.Pressed += SelectPlayerRefrence;
 
         AddSceneButton = GetNode<Button>("Panel/AddScene");
         NewSceneButton = GetNode<Button>("Panel/NewScene");
@@ -64,6 +69,11 @@ public partial class LevelDockScript : Control
     {
         SceneManager.New();
         // ToDo: Level editor right after lads
+    }
+
+    void SelectPlayerRefrence()
+    {
+        SceneManager.SetPlayerRef(PlayerRef.Open());
     }
 
     void ChangeScene()
