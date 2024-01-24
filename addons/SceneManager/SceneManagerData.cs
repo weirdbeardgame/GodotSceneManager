@@ -5,18 +5,24 @@ using System;
 [GlobalClass]
 public partial class SceneManagerData : Resource
 {
+    [Export] PackedScene _NewGameScene;
+
     [Export]
     Godot.Collections.Dictionary<string, PackedScene> _Levels;
 
     [Export]
     string CurrentLevel = "Test1";
 
-    public SceneManagerData()
-    {
-        _Levels = new Godot.Collections.Dictionary<string, PackedScene>();
-    }
-
+    public SceneManagerData() => _Levels = new Godot.Collections.Dictionary<string, PackedScene>();
     public SceneManagerData(Godot.Collections.Dictionary<string, PackedScene> lev) => _Levels = lev;
+
+    // Public Getters
+    public PackedScene NewGameScene => _NewGameScene;
+    public Godot.Collections.Dictionary<string, PackedScene> Levels => _Levels;
+
+    // Returns the instantiated packed scene as a Level.
+    public LevelCommon Level(string levelName) => _Levels[levelName].Instantiate<LevelCommon>();
+
 
 #if TOOLS
     public bool Add(PackedScene Scene)
@@ -50,19 +56,14 @@ public partial class SceneManagerData : Resource
         GD.PrintErr("Scene does not exist in manager");
         return false;
     }
-#endif
 
-    public Godot.Collections.Dictionary<string, PackedScene> Levels
+    public void SetNewGameScene(string SceneName)
     {
-        get
+        if (_Levels.ContainsKey(SceneName))
         {
-            return _Levels;
-
+            _NewGameScene = _Levels[SceneName];
         }
     }
+#endif
 
-    public LevelCommon Level(string levelName)
-    {
-        return _Levels[levelName].Instantiate<LevelCommon>();
-    }
 };

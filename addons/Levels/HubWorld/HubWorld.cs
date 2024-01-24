@@ -19,7 +19,7 @@ public partial class HubWorld : LevelCommon
     {
         Actor = (HubActor)GetNode("Actor");
         GD.Print("HubWorld");
-        Scenes = GetNode<SceneManager>("/root/SceneManager");
+        Scenes = SceneManager.Manager;
 
         if (Actor == null)
         {

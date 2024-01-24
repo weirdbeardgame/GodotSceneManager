@@ -10,7 +10,6 @@ public partial class SceneManager : EditorPlugin
 
     [Export] private PackedScene _NewGameScene;
 
-    [Export] PackedScene NewLevel;
     [Export] PackedScene PlayerScene;
 
     public static Action StartNewGame;
@@ -24,6 +23,8 @@ public partial class SceneManager : EditorPlugin
     [Export]
     string SceneManagerPath = "res://SceneManagerData.tres";
 
+    // Because Plugin exists outside the SceneTree, we create our own Tree or refrence to one.
+    SceneTree Tree;
 
     public static LevelCommon CurrentScene
     {
@@ -47,17 +48,21 @@ public partial class SceneManager : EditorPlugin
         }
     }
 
-    public override void _Ready()
-    {
-        // Initialization of the plugin goes here.
 
+    // Call this from your TitleScreen or other beginning scrips in game.
+    // Because SceneManager exists as a plugin it does not exist in SceneTree
+    // As such _Ready will not be called.
+    public void Init(SceneTree T)
+    {
+        Tree = new SceneTree();
         StartNewGame += NewGame;
         ChangeScene += SwitchLevel;
         ChangeSceneWithExit += LoadSubScene;
         ResetLevel += Reset;
+        Tree = T;
         if (ResourceLoader.Exists(SceneManagerPath))
         {
-            //ManagerData = ResourceLoader.Load<Resource>(SceneManagerPath) as SceneManagerData;
+            ManagerData = ResourceLoader.Load<Resource>(SceneManagerPath) as SceneManagerData;
         }
 
     }
@@ -73,7 +78,7 @@ public partial class SceneManager : EditorPlugin
     {
         if (CurrentScene is LevelCommon)
         {
-            _CurrentScene = (LevelCommon)GetTree().CurrentScene;
+            _CurrentScene = (LevelCommon)Tree.CurrentScene;
         }
 
         if (ManagerData.Levels.ContainsKey(scene))
@@ -127,7 +132,7 @@ public partial class SceneManager : EditorPlugin
 
     public bool New()
     {
-        LevelCommon Level = (LevelCommon)NewLevel.Instantiate();
+        LevelCommon Level = ManagerData.NewGameScene.Instantiate<LevelCommon>();
         return false;
     }
 
@@ -177,9 +182,9 @@ public partial class SceneManager : EditorPlugin
     void CallDeferredSub(SubLevel toLoad, Player Player, LevelType type)
     {
         CurrentScene.ExitLevel();
-        GetTree().Root.RemoveChild(CurrentScene);
+        Tree.Root.RemoveChild(CurrentScene);
         //activeSubScene = toLoad;
-        //GetTree().Root.AddChild(activeSubScene);
+        //Tree.Root.AddChild(activeSubScene);
         //activeSubScene.EnterLevel(Player, type);
     }
 
@@ -188,16 +193,12 @@ public partial class SceneManager : EditorPlugin
         if (CurrentScene != null)
         {
             CurrentScene.ExitLevel();
-            GetTree().Root.RemoveChild(CurrentScene);
+            Tree.Root.RemoveChild(CurrentScene);
             CurrentScene.Free();
         }
-        else
-        {
-            GetTree().Root.RemoveChild(GetTree().CurrentScene);
-        }
         _CurrentScene = toLoad;
-        GetTree().Root.AddChild(CurrentScene);
-        GetTree().CurrentScene = _CurrentScene;
+        Tree.Root.AddChild(CurrentScene);
+        Tree.CurrentScene = _CurrentScene;
         _CurrentScene.EnterLevel(Player);
     }
 
