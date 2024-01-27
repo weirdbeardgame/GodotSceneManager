@@ -7,11 +7,13 @@ using System.Linq;
 public partial class SceneManager : EditorPlugin
 {
     [Export] private static LevelCommon _CurrentScene;
-
     public static Action ResetLevel;
     public static Action StartNewGame;
     public static Action<string, Player> ChangeScene;
     public static Action<PackedScene, Player, Exit> ChangeSceneWithExit;
+
+    public PackedScene NewGameScene => ManagerData.NewGameScene;
+    public PackedScene PlayerRef => ManagerData.PlayerRef;
 
     Control EditorDock;
     static SceneManagerData ManagerData;
@@ -119,6 +121,8 @@ public partial class SceneManager : EditorPlugin
     public void Remove(string SceneName) => ManagerData.Remove(SceneName);
 
     public void SetPlayerRef(string path) => ManagerData.SetPlayerRef(path);
+
+    public void SetNewGameScene(string sceneName) => ManagerData.SetNewGameScene(sceneName);
 
     // TODO: Actually implement this. This is to generate a brand new scene and add it to the SceneManager.
     // This needs to open the inbuilt Level Editor!

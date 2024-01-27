@@ -7,7 +7,11 @@
 script = ExtResource("1_x4plw")
 
 [node name="FileDialog" type="FileDialog" parent="."]
-size = Vector2i(392, 159)
+title = "Open a File"
+size = Vector2i(780, 580)
+theme = ExtResource("1_wii2a")
+ok_button_text = "Open"
+file_mode = 0
 
 [node name="Browse" type="Button" parent="."]
 offset_left = 2.0
@@ -24,6 +28,8 @@ offset_top = 2.0
 offset_right = 354.0
 offset_bottom = 32.0
 theme = ExtResource("1_wii2a")
+fit_content = true
+scroll_following = true
 
 [node name="SelectLabel" type="RichTextLabel" parent="."]
 offset_left = 3.0
